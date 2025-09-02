@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Causal;
+use App\Models\TypeActivity;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Validator;
 
-class CausalController extends Controller
+class TypeActivityController extends Controller
 {
     private $rules = [
         'description' => 'required|string|min:3|max:100'
@@ -23,8 +21,8 @@ class CausalController extends Controller
      */
     public function index()
     {
-        $causals = Causal::all();
-        return response()->json($causals, Response::HTTP_OK);
+        $typeActivity = TypeActivity::all();
+        return response()->json($typeActivity, Response::HTTP_OK);
     }
 
     /**
@@ -33,59 +31,57 @@ class CausalController extends Controller
     public function store(Request $request)
     {
         $data = $this->applyValidator($request, $this->rules, $this->traductionAttributes);
-        
-        // Si no esta vacio (viene con errores) se retorna el mismo array
+
         if (!empty($data)) {
             return $data;
         }
 
-        $causal = Causal::create($request->all());
+        $typeActivity = TypeActivity::create($request->all());
         $response = [
             'message' => 'Registro creado exitosamente',
-            'causal' => $causal
+            'typeActivity' => $typeActivity
         ];
 
-        return response()->json($response, Response::HTTP_CREATED);
+        return response()->json($typeActivity, Response::HTTP_CREATED);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Causal $causal) // Si se usa el modelo laravel consulta por id automaticamente
+    public function show(TypeActivity $typeActivity)
     {
-        return response()->json($causal, Response::HTTP_OK);
+        return response()->json($typeActivity, Response::HTTP_OK);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Causal $causal)
+    public function update(Request $request, TypeActivity $typeActivity)
     {
         $data = $this->applyValidator($request, $this->rules, $this->traductionAttributes);
-        
-        // Si no esta vacio (viene con errores) se retorna el mismo array
+
         if (!empty($data)) {
             return $data;
         }
 
-        $causal->update($request->all());
+        $typeActivity->update($request->all());
         $response = [
             'message' => 'Registro actualizado exitosamente',
-            'causal' => $causal
+            'typeActivity' => $typeActivity
         ];
 
-        return response()->json($response, Response::HTTP_OK);
+        return response()->json($typeActivity, Response::HTTP_OK);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Causal $causal)
+    public function destroy(TypeActivity $typeActivity)
     {
-        $causal->delete();
+        $typeActivity->delete();
         $response = [
             'message' => 'Registro eliminado exitosamente',
-            'causal' => $causal
+            'typeActivity' => $typeActivity
         ];
 
         return response()->json($response, Response::HTTP_OK);
