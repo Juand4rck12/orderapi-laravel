@@ -17,7 +17,7 @@ class TypeActivitySeeder extends Seeder
             ['description' => 'REPARACION'],
             ['description' => 'CONSTRUCCION'],
             ['description' => 'INSTALACION'],
-            ['description' => 'SUSPENCION']
+            ['description' => 'SUSPENSION']
         ]);
     }
 }

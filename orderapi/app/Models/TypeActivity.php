@@ -13,7 +13,8 @@ class TypeActivity extends Model
         'description'
     ];
 
-    public function activities() {
+    public function activities()
+    {
         return $this->hasMany(Activity::class);
     }
 }

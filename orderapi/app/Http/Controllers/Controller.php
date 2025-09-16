@@ -14,14 +14,14 @@ class Controller extends BaseController
     use AuthorizesRequests, ValidatesRequests;
 
     /**
-     * Aplica las reglas de validación
+     * aplica las reglas de validación
      */
     public function applyValidator(Request $request, $rules, $traductionAttributes) {
-        $validator = Validator::make($request->all(), $rules);
+        $validator =  Validator::make($request->all(), $rules);
         $validator->setAttributeNames($traductionAttributes);
         $data = [];
-
-        if ($validator->fails()) {
+        if($validator->fails())
+        {
             $data = response()->json([
                 'errors' => $validator->errors(),
                 'data' => $request->all()

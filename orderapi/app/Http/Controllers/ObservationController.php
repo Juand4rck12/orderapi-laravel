@@ -15,15 +15,15 @@ class ObservationController extends Controller
 
     private $traductionAttributes = [
         'description' => 'descripción'
-    ];
+    ];    
 
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $observation = Observation::all();
-        return response()->json($observation, Response::HTTP_OK);
+        $observations = Observation::all();
+        return response()->json($observations, Response::HTTP_OK);
     }
 
     /**
@@ -32,15 +32,15 @@ class ObservationController extends Controller
     public function store(Request $request)
     {
         $data = $this->applyValidator($request, $this->rules, $this->traductionAttributes);
-
-        if (!empty($data)) {
+        if(!empty($data))
+        {
             return $data;
         }
 
         $observation = Observation::create($request->all());
         $response = [
             'message' => 'Registro creado exitosamente',
-            'observación' => $observation
+            'observation' => $observation
         ];
 
         return response()->json($response, Response::HTTP_CREATED);
@@ -60,15 +60,15 @@ class ObservationController extends Controller
     public function update(Request $request, Observation $observation)
     {
         $data = $this->applyValidator($request, $this->rules, $this->traductionAttributes);
-
-        if (!empty($data)) {
+        if(!empty($data))
+        {
             return $data;
         }
 
         $observation->update($request->all());
         $response = [
             'message' => 'Registro actualizado exitosamente',
-            'observación' => $observation
+            'observation' => $observation
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -79,10 +79,10 @@ class ObservationController extends Controller
      */
     public function destroy(Observation $observation)
     {
-        $observation->delete();
+        $observation->delete();        
         $response = [
             'message' => 'Registro eliminado exitosamente',
-            'causal' => $observation
+            'observation' => $observation
         ];
 
         return response()->json($response, Response::HTTP_OK);

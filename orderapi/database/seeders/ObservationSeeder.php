@@ -18,7 +18,7 @@ class ObservationSeeder extends Seeder
             ['description' => 'Contador con candado'],
             ['description' => 'Contador inaccesible'],
             ['description' => 'Predio en construcción'],
-            ['description' => 'No existe contador']
+            ['description' => 'No existe contador'],
         ]);
     }
 }

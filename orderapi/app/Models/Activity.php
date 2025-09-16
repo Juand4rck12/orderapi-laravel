@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Activity extends Model
 {
     use HasFactory;
-    protected $table = 'activity';
+    protected $table = "activity";
     protected $fillable = [
         'description',
         'hours',
@@ -16,15 +16,18 @@ class Activity extends Model
         'type_activity_id'
     ];
 
-    public function technician() {
+    public function technician()
+    {
         return $this->belongsTo(Technician::class, 'technician_id');
     }
 
-    public function type_activity() {
+    public function type_activity()
+    {
         return $this->belongsTo(TypeActivity::class, 'type_activity_id');
     }
 
-    public function orders() {
+    public function orders()
+    {
         return $this->belongsToMany(Order::class, 'order_activity', 'order_id', 'activity_id');
     }
 }

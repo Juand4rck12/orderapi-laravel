@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TypeActivity;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 
 class TypeActivityController extends Controller
 {
@@ -15,14 +16,14 @@ class TypeActivityController extends Controller
     private $traductionAttributes = [
         'description' => 'descripción'
     ];
-
+    
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $typeActivity = TypeActivity::all();
-        return response()->json($typeActivity, Response::HTTP_OK);
+        $types = TypeActivity::all();
+        return response()->json($types, Response::HTTP_OK);
     }
 
     /**
@@ -31,18 +32,18 @@ class TypeActivityController extends Controller
     public function store(Request $request)
     {
         $data = $this->applyValidator($request, $this->rules, $this->traductionAttributes);
-
-        if (!empty($data)) {
+        if(!empty($data))
+        {
             return $data;
         }
 
-        $typeActivity = TypeActivity::create($request->all());
+        $type = TypeActivity::create($request->all());
         $response = [
             'message' => 'Registro creado exitosamente',
-            'typeActivity' => $typeActivity
+            'type_activity' => $type
         ];
 
-        return response()->json($typeActivity, Response::HTTP_CREATED);
+        return response()->json($response, Response::HTTP_CREATED);
     }
 
     /**
@@ -59,18 +60,18 @@ class TypeActivityController extends Controller
     public function update(Request $request, TypeActivity $typeActivity)
     {
         $data = $this->applyValidator($request, $this->rules, $this->traductionAttributes);
-
-        if (!empty($data)) {
+        if(!empty($data))
+        {
             return $data;
         }
 
         $typeActivity->update($request->all());
         $response = [
             'message' => 'Registro actualizado exitosamente',
-            'typeActivity' => $typeActivity
+            'type_activity' => $typeActivity
         ];
 
-        return response()->json($typeActivity, Response::HTTP_OK);
+        return response()->json($response, Response::HTTP_OK);
     }
 
     /**
@@ -81,7 +82,7 @@ class TypeActivityController extends Controller
         $typeActivity->delete();
         $response = [
             'message' => 'Registro eliminado exitosamente',
-            'typeActivity' => $typeActivity
+            'type_activity' => $typeActivity
         ];
 
         return response()->json($response, Response::HTTP_OK);

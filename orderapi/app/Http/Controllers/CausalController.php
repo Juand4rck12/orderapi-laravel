@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Causal;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 class CausalController extends Controller
@@ -17,7 +16,8 @@ class CausalController extends Controller
     private $traductionAttributes = [
         'description' => 'descripción'
     ];
-
+    
+    
     /**
      * Display a listing of the resource.
      */
@@ -33,9 +33,8 @@ class CausalController extends Controller
     public function store(Request $request)
     {
         $data = $this->applyValidator($request, $this->rules, $this->traductionAttributes);
-        
-        // Si no esta vacio (viene con errores) se retorna el mismo array
-        if (!empty($data)) {
+        if(!empty($data))
+        {
             return $data;
         }
 
@@ -51,7 +50,7 @@ class CausalController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Causal $causal) // Si se usa el modelo laravel consulta por id automaticamente
+    public function show(Causal $causal)
     {
         return response()->json($causal, Response::HTTP_OK);
     }
@@ -62,9 +61,8 @@ class CausalController extends Controller
     public function update(Request $request, Causal $causal)
     {
         $data = $this->applyValidator($request, $this->rules, $this->traductionAttributes);
-        
-        // Si no esta vacio (viene con errores) se retorna el mismo array
-        if (!empty($data)) {
+        if(!empty($data))
+        {
             return $data;
         }
 

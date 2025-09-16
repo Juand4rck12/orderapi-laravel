@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Validator;
 
 class TechnicianController extends Controller
 {
-    private $rules = [
+    private $rules = [   
+        'document' => 'required|integer|unique:technician|min:1|max:99999999999999999999',   
         'name' => 'required|string|min:3|max:80',
         'speciality' => 'max:50',
         'phone' => 'max:30'
@@ -19,16 +20,17 @@ class TechnicianController extends Controller
         'document' => 'documento',
         'name' => 'nombre',
         'speciality' => 'especialidad',
-        'phone' => 'teléfono'
+        'phone' => 'teléfono' 
     ];
-
+  
+    
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $technician = Technician::all();
-        return response()->json($technician, Response::HTTP_OK);
+        $technicians = Technician::all();
+        return response()->json($technicians, Response::HTTP_OK);
     }
 
     /**
@@ -37,11 +39,11 @@ class TechnicianController extends Controller
     public function store(Request $request)
     {
         $data = $this->applyValidator($request, $this->rules, $this->traductionAttributes);
-
-        if (!empty($data)) {
+        if(!empty($data))
+        {
             return $data;
         }
-        
+
         $technician = Technician::create($request->all());
         $response = [
             'message' => 'Registro creado exitosamente',
@@ -65,11 +67,11 @@ class TechnicianController extends Controller
     public function update(Request $request, Technician $technician)
     {
         $data = $this->applyValidator($request, $this->rules, $this->traductionAttributes);
-
-        if (!empty($data)) {
+        if(!empty($data))
+        {
             return $data;
         }
-        
+
         $technician->update($request->all());
         $response = [
             'message' => 'Registro actualizado exitosamente',

@@ -19,22 +19,16 @@ class ActivityController extends Controller
         'description' => 'descripción',
         'hours' => 'horas',
         'technician_id' => 'técnico',
-        'type_activity_id' => 'tipo de actividad'
+        'type_activity_id' => 'tipo de actividad' 
     ];
-
+    
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $activities = Activity::all();
-        // Traer todos los campos 
         $activities->load(['technician', 'type_activity']);
-        /* Para traer solo nombre y descripcion 
-        $activities = Activity::with([
-            'technician:id,name',
-            'type_activity:id,description'
-        ])->get(); */
         return response()->json($activities, Response::HTTP_OK);
     }
 
@@ -44,14 +38,14 @@ class ActivityController extends Controller
     public function store(Request $request)
     {
         $data = $this->applyValidator($request, $this->rules, $this->traductionAttributes);
-
-        if (!empty($data)) {
+        if(!empty($data))
+        {
             return $data;
         }
 
         $activity = Activity::create($request->all());
         $response = [
-            'message' => 'Registro actualizado exitosamente',
+            'message' => 'Registro creado exitosamente',
             'activity' => $activity
         ];
 
@@ -73,15 +67,15 @@ class ActivityController extends Controller
     public function update(Request $request, Activity $activity)
     {
         $data = $this->applyValidator($request, $this->rules, $this->traductionAttributes);
-
-        if (!empty($data)) {
+        if(!empty($data))
+        {
             return $data;
         }
 
         $activity->update($request->all());
         $response = [
-            'message' => 'Registro modificado exitosamente',
-            'activity'  => $activity
+            'message' => 'Registro actualizado exitosamente',
+            'activity' => $activity
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -93,11 +87,11 @@ class ActivityController extends Controller
     public function destroy(Activity $activity)
     {
         $activity->delete();
-        $data = [
+        $response = [
             'message' => 'Registro eliminado exitosamente',
-            'activity'  => $activity->id
+            'activity' => $activity
         ];
 
-        return response()->json($data, Response::HTTP_OK);
+        return response()->json($response, Response::HTTP_OK);
     }
 }
